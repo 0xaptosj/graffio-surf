@@ -1,0 +1,40 @@
+{
+  "name": "graffio-surf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "gen-abi": "export $(cat .env | xargs) && ./gen_abi.sh",
+    "create-canvas-token": "ts-node-esm src/scripts/super_admin/create_canvas_token.ts",
+    "add-admin": "ts-node-esm src/scripts/super_admin/add_admin.ts",
+    "remove-admin": "ts-node-esm src/scripts/super_admin/remove_admin.ts",
+    "update-user-timeout": "ts-node-esm src/scripts/admin/update_user_timeout.ts",
+    "update-max-pixel-per-draw": "ts-node-esm src/scripts/admin/update_max_pixel_per_draw.ts",
+    "disable-drawing-for-user": "ts-node-esm src/scripts/admin/disable_drawing_for_user.ts",
+    "enable-drawing-for-user": "ts-node-esm src/scripts/admin/enable_drawing_for_user.ts",
+    "add-to-allowlist": "ts-node-esm src/scripts/admin/add_to_allowlist.ts",
+    "remove-from-allowlist": "ts-node-esm src/scripts/admin/remove_from_allowlist.ts",
+    "add-to-blocklist": "ts-node-esm src/scripts/admin/add_to_blocklist.ts",
+    "remove-from-blocklist": "ts-node-esm src/scripts/admin/remove_from_blocklist.ts",
+    "draw": "ts-node-esm src/scripts/user/draw.ts"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@thalalabs/surf": "0.0.13",
+    "aptos": "1.19.0",
+    "dotenv": "^16.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xaptosj/graffio-surf.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0xaptosj/graffio-surf/issues"
+  },
+  "homepage": "https://github.com/0xaptosj/graffio-surf#readme"
+}
