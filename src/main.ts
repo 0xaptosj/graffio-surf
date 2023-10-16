@@ -33,20 +33,10 @@ async function main() {
   // Drawing it will place overlay image on top of current image
 
   let toDraw = USE_OPTIMIZED_VERSION
-    ? await loadImageDiffBetweenOverlayAndCurrentOptimized(
-        CURRENT_IMAGE_PATH,
-        OVERLAY_IMAGE_PATH,
-        { centerImage: false },
-        LEFT_POS,
-        TOP_POS
-      )
-    : await loadImageDiffBetweenOverlayAndCurrent(
-        CURRENT_IMAGE_PATH,
-        OVERLAY_IMAGE_PATH,
-        { centerImage: false },
-        LEFT_POS,
-        TOP_POS
-      );
+    ? await loadImageDiffBetweenOverlayAndCurrentOptimized({
+        centerImage: false,
+      })
+    : await loadImageDiffBetweenOverlayAndCurrent({ centerImage: false });
 
   console.log(`toDraw pixels count: ${toDraw.length}`);
   if (toDraw.length === 0) {

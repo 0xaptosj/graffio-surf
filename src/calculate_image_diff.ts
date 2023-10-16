@@ -1,6 +1,12 @@
 import Jimp from "jimp";
 import { RGBAXY, XYC } from "./types";
-import { RGB_TO_COLOR_ID } from "./const";
+import {
+  CURRENT_IMAGE_PATH,
+  LEFT_POS,
+  OVERLAY_IMAGE_PATH,
+  RGB_TO_COLOR_ID,
+  TOP_POS,
+} from "./const";
 
 type LoadImageOptions = {
   scaleTo?: { width: number; height: number };
@@ -8,17 +14,15 @@ type LoadImageOptions = {
 };
 
 export const loadImageDiffBetweenOverlayAndCurrent = async (
-  currentImgPath: string,
-  overlayImagePath: string,
-  opt: LoadImageOptions = {},
-  leftPos: number,
-  topPos: number
+  opt: LoadImageOptions = {}
 ) => {
-  const currentImage = await Jimp.read(currentImgPath);
+  let leftPos = LEFT_POS;
+  let topPos = TOP_POS;
+  const currentImage = await Jimp.read(CURRENT_IMAGE_PATH);
   const currentImageWidth = currentImage.getWidth();
   const currentImageHeight = currentImage.getHeight();
 
-  const overlayImage = await Jimp.read(overlayImagePath);
+  const overlayImage = await Jimp.read(OVERLAY_IMAGE_PATH);
   const overlayImageWidth = overlayImage.getWidth();
   const overlayImageHeight = overlayImage.getHeight();
 
@@ -30,12 +34,15 @@ export const loadImageDiffBetweenOverlayAndCurrent = async (
   const toDraw: RGBAXY[] = [];
   const diffImage = currentImage.clone();
 
-  for (let x = leftPos; x < overlayImageWidth; x++) {
-    for (let y = topPos; y < overlayImageHeight; y++) {
+  for (let x = 0; x < overlayImageWidth; x++) {
+    for (let y = 0; y < overlayImageHeight; y++) {
       const overlayImageColor = overlayImage.getPixelColor(x, y);
       const overlayImageRgba = Jimp.intToRGBA(overlayImageColor);
 
-      const currentImageColor = currentImage.getPixelColor(x, y);
+      const currentImageColor = currentImage.getPixelColor(
+        x + leftPos,
+        y + topPos
+      );
       const currentImageRgba = Jimp.intToRGBA(currentImageColor);
 
       // filter out unchanged pixels
@@ -46,7 +53,7 @@ export const loadImageDiffBetweenOverlayAndCurrent = async (
         overlayImageRgba.a != currentImageRgba.a
       ) {
         diffImage.setPixelColor(overlayImageColor, x, y);
-        toDraw.push({ ...overlayImageRgba, x, y });
+        toDraw.push({ ...overlayImageRgba, x: x + leftPos, y: y + topPos });
       }
     }
   }
@@ -65,17 +72,15 @@ export const loadImageDiffBetweenOverlayAndCurrent = async (
 };
 
 export const loadImageDiffBetweenOverlayAndCurrentOptimized = async (
-  currentImgPath: string,
-  overlayImagePath: string,
-  opt: LoadImageOptions = {},
-  leftPos: number,
-  topPos: number
+  opt: LoadImageOptions = {}
 ) => {
-  const currentImage = await Jimp.read(currentImgPath);
+  let leftPos = LEFT_POS;
+  let topPos = TOP_POS;
+  const currentImage = await Jimp.read(CURRENT_IMAGE_PATH);
   const currentImageWidth = currentImage.getWidth();
   const currentImageHeight = currentImage.getHeight();
 
-  const overlayImage = await Jimp.read(overlayImagePath);
+  const overlayImage = await Jimp.read(OVERLAY_IMAGE_PATH);
   const overlayImageWidth = overlayImage.getWidth();
   const overlayImageHeight = overlayImage.getHeight();
 
@@ -87,12 +92,15 @@ export const loadImageDiffBetweenOverlayAndCurrentOptimized = async (
   const toDraw: XYC[] = [];
   const diffImage = currentImage.clone();
 
-  for (let x = leftPos; x < overlayImageWidth; x++) {
-    for (let y = topPos; y < overlayImageHeight; y++) {
+  for (let x = 0; x < overlayImageWidth; x++) {
+    for (let y = 0; y < overlayImageHeight; y++) {
       const overlayImageColor = overlayImage.getPixelColor(x, y);
       const overlayImageRgba = Jimp.intToRGBA(overlayImageColor);
 
-      const currentImageColor = currentImage.getPixelColor(x, y);
+      const currentImageColor = currentImage.getPixelColor(
+        x + leftPos,
+        y + topPos
+      );
       const currentImageRgba = Jimp.intToRGBA(currentImageColor);
 
       // filter out unchanged pixels
@@ -117,7 +125,7 @@ export const loadImageDiffBetweenOverlayAndCurrentOptimized = async (
           //   );
           colorID = 1;
         }
-        toDraw.push({ x, y, c: colorID });
+        toDraw.push({ c: colorID, x: x + leftPos, y: y + topPos });
       }
     }
   }

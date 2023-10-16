@@ -55,9 +55,12 @@ export const NETWORK = env.NETWORK! as "testnet" | "mainnet";
 
 export const CURRENT_IMAGE_PATH = "img/snapshot_bad.png";
 // Reset to snapshot image
-export const OVERLAY_IMAGE_PATH = "img/snapshot_3.png";
+// export const OVERLAY_IMAGE_PATH = "img/snapshot_3.png";
 // Place a pepe
-// export const OVERLAY_IMAGE_PATH = "img/pepe.png";
+export const OVERLAY_IMAGE_PATH = "img/pepe.png";
+
+export const LEFT_POS = 0;
+export const TOP_POS = 50;
 
 /*
 There are 2 modes
@@ -72,8 +75,6 @@ There are 2 modes
         so LEFT_POS and TOP_POS are set accordingly
         e.g. if you want to place it at 100, 150 then LEFT_POS = 100, TOP_POS = 150
 */
-export const LEFT_POS = 0;
-export const TOP_POS = 0;
 
 export const LIMIT_PER_DRAW = 1000;
 
