@@ -17,7 +17,7 @@ import {
   getSequenceNumber,
 } from "./util";
 import { AptosAccount } from "aptos";
-import { drawPoint } from "./drawUsingAptosSdk";
+import { drawPoint } from "./draw_using_aptos_sdk_for_massive_draw";
 import {
   loadImageDiffBetweenOverlayAndCurrent,
   loadImageDiffBetweenOverlayAndCurrentOptimized,
