@@ -1,5 +1,5 @@
 import { CanvasTokenContract } from "../../canvas_token_contract";
-import { ADMIN_1_PRIVATE_KEY, CANVAS_TOKEN_ADDR, NETWORK } from "../../env";
+import { ADMIN_1_PRIVATE_KEY, CANVAS_TOKEN_ADDR, NETWORK } from "../../const";
 
 const updateMaxPixelPerDraw = async () => {
   const canvasTokenContract = new CanvasTokenContract(
@@ -7,7 +7,7 @@ const updateMaxPixelPerDraw = async () => {
     ADMIN_1_PRIVATE_KEY
   );
 
-  const maxPixel = 10;
+  const maxPixel = 2500;
 
   return canvasTokenContract
     .updateMaxNumberOfPixelsPerDraw(CANVAS_TOKEN_ADDR, maxPixel)

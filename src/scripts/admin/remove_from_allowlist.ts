@@ -4,7 +4,7 @@ import {
   CANVAS_TOKEN_ADDR,
   NETWORK,
   USER_1_PRIVATE_KEY,
-} from "../../env";
+} from "../../const";
 import { getAptosAccountFromPrivateKey } from "../../util";
 
 const removeFromAllowlist = async () => {

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "overlay-draw": "ts-node-esm src/main.ts",
     "gen-abi": "export $(cat .env | xargs) && ./gen_abi.sh",
     "create-canvas-token": "ts-node-esm src/scripts/super_admin/create_canvas_token.ts",
     "add-admin": "ts-node-esm src/scripts/super_admin/add_admin.ts",
@@ -23,9 +24,11 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@supercharge/promise-pool": "^3.1.0",
     "@thalalabs/surf": "0.0.13",
     "aptos": "1.19.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "jimp": "^0.22.10"
   },
   "repository": {
     "type": "git",

@@ -4,7 +4,7 @@ import {
   CANVAS_CONTRACT_OWNER_PRIVATE_KEY,
   CANVAS_TOKEN_ADDR,
   NETWORK,
-} from "../../env";
+} from "../../const";
 import { getAptosAccountFromPrivateKey } from "../../util";
 
 const removeAdmin = async () => {

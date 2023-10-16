@@ -3,7 +3,7 @@ import {
   CANVAS_CONTRACT_OWNER_PRIVATE_KEY,
   FULL_NODE_URL,
   NETWORK,
-} from "../../env";
+} from "../../const";
 
 const createCanvasToken = async () => {
   const canvasTokenContract = new CanvasTokenContract(
