@@ -1,5 +1,5 @@
 import { CanvasTokenContract } from "../../canvas_token_contract";
-import { ADMIN_1_PRIVATE_KEY, CANVAS_TOKEN_ADDR, NETWORK } from "../../env";
+import { ADMIN_1_PRIVATE_KEY, CANVAS_TOKEN_ADDR, NETWORK } from "../../const";
 
 const enableDrawingForUser = async () => {
   const canvasTokenContract = new CanvasTokenContract(
