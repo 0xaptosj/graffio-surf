@@ -2,22 +2,22 @@ import Jimp from "jimp";
 import { RGBAXY, XYC } from "./types";
 import {
   CURRENT_IMAGE_PATH,
-  LEFT_POS,
   OVERLAY_IMAGE_PATH,
   RGB_TO_COLOR_ID,
-  TOP_POS,
 } from "./const";
 
 type LoadImageOptions = {
   scaleTo?: { width: number; height: number };
   centerImage?: boolean;
+  leftPos?: number;
+  topPos?: number;
 };
 
 export const loadImageDiffBetweenOverlayAndCurrent = async (
   opt: LoadImageOptions = {}
 ) => {
-  let leftPos = LEFT_POS;
-  let topPos = TOP_POS;
+  let leftPos = opt.leftPos || 0;
+  let topPos = opt.topPos || 0;
   const currentImage = await Jimp.read(CURRENT_IMAGE_PATH);
   const currentImageWidth = currentImage.getWidth();
   const currentImageHeight = currentImage.getHeight();
@@ -74,8 +74,8 @@ export const loadImageDiffBetweenOverlayAndCurrent = async (
 export const loadImageDiffBetweenOverlayAndCurrentOptimized = async (
   opt: LoadImageOptions = {}
 ) => {
-  let leftPos = LEFT_POS;
-  let topPos = TOP_POS;
+  let leftPos = opt.leftPos || 0;
+  let topPos = opt.topPos || 0;
   const currentImage = await Jimp.read(CURRENT_IMAGE_PATH);
   const currentImageWidth = currentImage.getWidth();
   const currentImageHeight = currentImage.getHeight();

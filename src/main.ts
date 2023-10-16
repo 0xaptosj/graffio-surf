@@ -24,6 +24,10 @@ import {
 } from "./calculate_image_diff";
 
 async function main() {
+  const args = process.argv.slice(2); // The first two arguments are node and the script file
+  let leftPos = args[0] ? parseInt(args[0]) : LEFT_POS;
+  let topPos = args[1] ? parseInt(args[1]) : TOP_POS;
+
   const beginTime = new Date();
   console.log("begin to run draw script: ", beginTime);
 
@@ -32,11 +36,18 @@ async function main() {
   // toDraw is the diff between overlay image and current image
   // Drawing it will place overlay image on top of current image
 
+  let centerImage = false;
   let toDraw = USE_OPTIMIZED_VERSION
     ? await loadImageDiffBetweenOverlayAndCurrentOptimized({
-        centerImage: false,
+        centerImage,
+        leftPos,
+        topPos,
       })
-    : await loadImageDiffBetweenOverlayAndCurrent({ centerImage: false });
+    : await loadImageDiffBetweenOverlayAndCurrent({
+        centerImage,
+        leftPos,
+        topPos,
+      });
 
   console.log(`toDraw pixels count: ${toDraw.length}`);
   if (toDraw.length === 0) {
