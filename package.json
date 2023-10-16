@@ -15,7 +15,8 @@
     "enable-drawing-for-user": "ts-node-esm src/scripts/admin/enable_drawing_for_user.ts",
     "add-to-unlimited-artists": "ts-node-esm src/scripts/admin/add_to_unlimited_artists.ts",
     "remove-from-unlimited-artists": "ts-node-esm src/scripts/admin/remove_from_unlimited_artists.ts",
-    "draw": "ts-node-esm src/scripts/user/draw.ts"
+    "draw": "ts-node-esm src/scripts/user/draw.ts",
+    "test": "ts-node-esm src/test.ts"
   },
   "devDependencies": {
     "ts-node": "^10.9.1",

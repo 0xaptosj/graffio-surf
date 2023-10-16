@@ -1,10 +1,6 @@
 import Jimp from "jimp";
-import { RGBA, RGBAXY, XYC } from "./types";
-import {
-  CURRENT_IMAGE_PATH,
-  OVERLAY_IMAGE_PATH,
-  RGB_TO_COLOR_ID,
-} from "./const";
+import { RGBA, XYC } from "./types";
+import { RGB_TO_COLOR_ID } from "./const";
 
 type LoadImageOptions = {
   scaleTo?: { width: number; height: number };
@@ -14,15 +10,17 @@ type LoadImageOptions = {
 };
 
 export const loadImageDiffBetweenOverlayAndCurrent = async (
+  currentImagePath: string,
+  overlayImagePath: string,
   opt: LoadImageOptions = {}
 ) => {
   let leftPos = opt.leftPos || 0;
   let topPos = opt.topPos || 0;
-  const currentImage = await Jimp.read(CURRENT_IMAGE_PATH);
+  const currentImage = await Jimp.read(currentImagePath);
   const currentImageWidth = currentImage.getWidth();
   const currentImageHeight = currentImage.getHeight();
 
-  const overlayImage = await Jimp.read(OVERLAY_IMAGE_PATH);
+  const overlayImage = await Jimp.read(overlayImagePath);
   const overlayImageWidth = overlayImage.getWidth();
   const overlayImageHeight = overlayImage.getHeight();
 

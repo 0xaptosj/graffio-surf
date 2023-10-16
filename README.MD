@@ -28,5 +28,5 @@ npm run overlay-draw
 You can specify the top left corner if you are placing a small image on top of current like this, left pos is 50, top pos is 100.
 
 ```
-npm run overlay-draw -- 50 100
+npm run overlay-draw -- "img/current_image.png" "img/pepe.png" 250 100
 ```

@@ -1,9 +1,11 @@
 import { PromisePool } from "@supercharge/promise-pool";
 import {
+  CURRENT_IMAGE_PATH,
   LEFT_POS,
   LIMIT_PER_DRAW,
   MY_OWN_FAUCET_PRIVATE_KEY,
   NUM_DRAWERS,
+  OVERLAY_IMAGE_PATH,
   TOP_POS,
 } from "./const";
 import { AccountPool, createAndFundAccount } from "./account_pool";
@@ -19,8 +21,10 @@ import { loadImageDiffBetweenOverlayAndCurrent } from "./calculate_image_diff";
 
 async function main() {
   const args = process.argv.slice(2); // The first two arguments are node and the script file
-  let leftPos = args[0] ? parseInt(args[0]) : LEFT_POS;
-  let topPos = args[1] ? parseInt(args[1]) : TOP_POS;
+  let currentImagePath = args[0] ? args[0] : CURRENT_IMAGE_PATH;
+  let overlayImagePath = args[1] ? args[1] : OVERLAY_IMAGE_PATH;
+  let leftPos = args[2] ? parseInt(args[2]) : LEFT_POS;
+  let topPos = args[3] ? parseInt(args[3]) : TOP_POS;
 
   const beginTime = new Date();
   console.log("begin to run draw script: ", beginTime);
@@ -31,11 +35,15 @@ async function main() {
   // Drawing it will place overlay image on top of current image
 
   let centerImage = false;
-  let toDraw = await loadImageDiffBetweenOverlayAndCurrent({
-    centerImage,
-    leftPos,
-    topPos,
-  });
+  let toDraw = await loadImageDiffBetweenOverlayAndCurrent(
+    currentImagePath,
+    overlayImagePath,
+    {
+      centerImage,
+      leftPos,
+      topPos,
+    }
+  );
 
   console.log(`toDraw pixels count: ${toDraw.length}`);
   if (toDraw.length === 0) {
