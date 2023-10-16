@@ -2,11 +2,50 @@ import "dotenv/config";
 
 import { env } from "process";
 
+export const USE_OPTIMIZED_VERSION = true;
+
+/*
+// black, r: 0, g: 0, b: 0
+0,
+// white, r: 255, g: 255, b: 255
+1,
+// blue, r: 0, g: 158, b: 25
+2,
+// green, r: 0, g: 197, b: 3
+3,
+// yellow, r: 255, g: 198, b: 0
+4,
+// orange, r: 255, g: 125, b: 0
+5,
+// red, r: 250, g: 0, b: 106
+6,
+// violet, r: 196, g: 0, b: 199
+7
+*/
+export const RGB_TO_COLOR_ID = {
+  "0-0-0": 0,
+  "255-255-255": 1,
+  "0-158-25": 2,
+  "0-197-3": 3,
+  "255-198-0": 4,
+  "255-125-0": 5,
+  "250-0-106": 6,
+  "196-0-199": 7,
+};
+
 export const CANVAS_CONTRACT_OWNER_PRIVATE_KEY =
   env.CANVAS_CONTRACT_OWNER_PRIVATE_KEY!;
 
 export const CANVAS_CONTRACT_ADDR = env.CANVAS_CONTRACT_ADDR!;
 export const CANVAS_TOKEN_ADDR = env.CANVAS_TOKEN_ADDR! as `0x${string}`;
+
+export const OPTIMIZED_CANVAS_CONTRACT_OWNER_PRIVATE_KEY =
+  env.OPTIMIZED_CANVAS_CONTRACT_OWNER_PRIVATE_KEY!;
+
+export const OPTIMIZED_CANVAS_CONTRACT_ADDR =
+  env.OPTIMIZED_CANVAS_CONTRACT_ADDR!;
+export const OPTIMIZED_CANVAS_TOKEN_ADDR =
+  env.OPTIMIZED_CANVAS_TOKEN_ADDR! as `0x${string}`;
 
 export const USER_1_PRIVATE_KEY = env.USER_1_PRIVATE_KEY!;
 export const ADMIN_1_PRIVATE_KEY = env.ADMIN_1_PRIVATE_KEY!;
@@ -14,7 +53,7 @@ export const ADMIN_1_PRIVATE_KEY = env.ADMIN_1_PRIVATE_KEY!;
 export const FULL_NODE_URL = env.FULL_NODE_URL!;
 export const NETWORK = env.NETWORK! as "testnet" | "mainnet";
 
-export const CURRENT_IMAGE_PATH = "img/snapshot_2.png";
+export const CURRENT_IMAGE_PATH = "img/snapshot_bad.png";
 // Reset to snapshot image
 export const OVERLAY_IMAGE_PATH = "img/snapshot_3.png";
 // Place a pepe
@@ -36,7 +75,7 @@ There are 2 modes
 export const LEFT_POS = 0;
 export const TOP_POS = 0;
 
-export const LIMIT_PER_DRAW = 2500;
+export const LIMIT_PER_DRAW = 1000;
 
 export const ONE_APT = 100_000_000;
 

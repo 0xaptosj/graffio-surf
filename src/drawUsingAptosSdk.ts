@@ -1,37 +1,66 @@
 import { AptosAccount, AptosClient, BCS } from "aptos";
+import { serializeVectorU64, serializeVectorU8 } from "./util";
 import {
-  AccountAddress,
-  ChainId,
-  EntryFunction,
+  CANVAS_CONTRACT_ADDR,
+  OPTIMIZED_CANVAS_CONTRACT_ADDR,
+  GAS_LIMIT,
+  GAS_PRICE,
+  USE_OPTIMIZED_VERSION,
+  OPTIMIZED_CANVAS_TOKEN_ADDR,
+  CANVAS_TOKEN_ADDR,
+} from "./const";
+import {
   RGBAXY,
-  RawTransaction,
+  AccountAddress,
+  XYC,
   TransactionPayloadEntryFunction,
-  serializeVectorU64,
-  serializeVectorU8,
-} from "./util";
-import { CANVAS_CONTRACT_ADDR, GAS_LIMIT, GAS_PRICE } from "./const";
+  EntryFunction,
+  RawTransaction,
+  ChainId,
+} from "./types";
+
+const getPayload = (canvasTokenAddr: `0x${string}`, rgbaxyArr: RGBAXY[]) => {
+  return [
+    BCS.bcsToBytes(AccountAddress.fromHex(canvasTokenAddr)),
+    serializeVectorU64(rgbaxyArr.map((rgbaxy) => rgbaxy.x)),
+    serializeVectorU64(rgbaxyArr.map((rgbaxy) => rgbaxy.y)),
+    serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.r)),
+    serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.g)),
+    serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.b)),
+  ];
+};
+
+const getOptimizedPayload = (canvasTokenAddr: `0x${string}`, xycArr: XYC[]) => {
+  return [
+    BCS.bcsToBytes(AccountAddress.fromHex(canvasTokenAddr)),
+    serializeVectorU64(xycArr.map((rgbaxy) => rgbaxy.x)),
+    serializeVectorU64(xycArr.map((rgbaxy) => rgbaxy.y)),
+    serializeVectorU8(xycArr.map((rgbaxy) => rgbaxy.c)),
+  ];
+};
 
 export const drawPoint = async (
   aptosClient: AptosClient,
   account: AptosAccount,
-  tokenAddress: string,
-  rgbaxyArr: RGBAXY[]
+  arr: RGBAXY[] | XYC[]
 ) => {
-  rgbaxyArr = rgbaxyArr.filter((rgbaxy) => rgbaxy != undefined);
+  const canvasContractAddr = USE_OPTIMIZED_VERSION
+    ? OPTIMIZED_CANVAS_CONTRACT_ADDR
+    : CANVAS_CONTRACT_ADDR;
+  const canvasTokenAddr = USE_OPTIMIZED_VERSION
+    ? OPTIMIZED_CANVAS_TOKEN_ADDR
+    : CANVAS_TOKEN_ADDR;
 
   const entryFunctionPayload = new TransactionPayloadEntryFunction(
     EntryFunction.natural(
-      `${CANVAS_CONTRACT_ADDR}::canvas_token`,
+      `${canvasContractAddr}::canvas_token`,
       "draw",
       [],
-      [
-        BCS.bcsToBytes(AccountAddress.fromHex(tokenAddress)),
-        serializeVectorU64(rgbaxyArr.map((rgbaxy) => rgbaxy.x)),
-        serializeVectorU64(rgbaxyArr.map((rgbaxy) => rgbaxy.y)),
-        serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.r)),
-        serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.g)),
-        serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.b)),
-      ]
+      USE_OPTIMIZED_VERSION
+        ? // @ts-ignore
+          getOptimizedPayload(canvasTokenAddr, arr)
+        : // @ts-ignore
+          getPayload(canvasTokenAddr, arr)
     )
   );
 
@@ -63,7 +92,7 @@ export const drawPoint = async (
   });
   console.log(
     "put dot:",
-    `${tokenAddress.slice(0, 5)}...`,
+    `${canvasTokenAddr.slice(0, 5)}...`,
     // rgbaxyArr,
     // [rgbaxy.x, rgbaxy.y],
     // [rgbaxy.r, rgbaxy.g, rgbaxy.b, rgbaxy.a],
