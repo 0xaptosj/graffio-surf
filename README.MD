@@ -24,3 +24,9 @@ There is a special draw overlay scripts that can reset current canvas to a previ
 ```
 npm run overlay-draw
 ```
+
+You can specify the top left corner if you are placing a small image on top of current like this, left pos is 50, top pos is 100.
+
+```
+npm run overlay-draw -- 50 100
+```
