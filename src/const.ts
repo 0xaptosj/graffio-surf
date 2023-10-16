@@ -55,12 +55,12 @@ export const NETWORK = env.NETWORK! as "testnet" | "mainnet";
 
 export const CURRENT_IMAGE_PATH = "img/snapshot_bad.png";
 // Reset to snapshot image
-// export const OVERLAY_IMAGE_PATH = "img/snapshot_3.png";
+export const OVERLAY_IMAGE_PATH = "img/snapshot_3.png";
 // Place a pepe
-export const OVERLAY_IMAGE_PATH = "img/pepe.png";
+// export const OVERLAY_IMAGE_PATH = "img/pepe.png";
 
 export const LEFT_POS = 0;
-export const TOP_POS = 50;
+export const TOP_POS = 0;
 
 /*
 There are 2 modes

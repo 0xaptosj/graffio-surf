@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "overlay-draw": "ts-node-esm src/main.ts",
-    "gen-abi": "export $(cat .env | xargs) && ./sh_scripts_for_based_version/gen_abi.sh",
-    "gen-optimized-version-abi": "./sh_scripts_for_based_version/gen_optimized_version_abi.sh",
+    "gen-abi": "export $(cat .env | xargs) && ./sh_scripts/gen_abi.sh",
+    "gen-optimized-version-abi": "./sh_scripts/gen_optimized_version_abi.sh",
     "base-create-canvas-token": "ts-node-esm src/scripts_for_based_version/super_admin/create_canvas_token.ts",
     "base-add-admin": "ts-node-esm src/scripts_for_based_version/super_admin/add_admin.ts",
     "base-remove-admin": "ts-node-esm src/scripts_for_based_version/super_admin/remove_admin.ts",
