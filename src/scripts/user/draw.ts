@@ -1,16 +1,15 @@
 import { CanvasTokenContract } from "../../canvas_token_contract";
-import {
-  CANVAS_CONTRACT_OWNER_PRIVATE_KEY,
-  CANVAS_TOKEN_ADDR,
-  NETWORK,
-  USER_1_PRIVATE_KEY,
-} from "../../const";
+import { CANVAS_TOKEN_ADDR, NETWORK, USER_1_PRIVATE_KEY } from "../../const";
+import { getAptosAccount } from "../../util";
 
 const draw = async () => {
   const canvasTokenContract = new CanvasTokenContract(
     NETWORK,
-    CANVAS_CONTRACT_OWNER_PRIVATE_KEY
+    USER_1_PRIVATE_KEY
   );
+
+  const account = getAptosAccount(USER_1_PRIVATE_KEY);
+  console.log(account.address().hex());
 
   const xs = [10, 11, 12, 13];
   const ys = [11, 12, 13, 14];

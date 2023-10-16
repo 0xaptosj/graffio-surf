@@ -7,7 +7,7 @@ const updateUserTimeout = async () => {
     ADMIN_1_PRIVATE_KEY
   );
 
-  const timeout = 10;
+  const timeout = 15;
 
   return canvasTokenContract
     .updateTimeout(CANVAS_TOKEN_ADDR, timeout)

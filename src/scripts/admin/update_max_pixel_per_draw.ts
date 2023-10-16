@@ -7,7 +7,7 @@ const updateMaxPixelPerDraw = async () => {
     ADMIN_1_PRIVATE_KEY
   );
 
-  const maxPixel = 2500;
+  const maxPixel = 800;
 
   return canvasTokenContract
     .updateMaxNumberOfPixelsPerDraw(CANVAS_TOKEN_ADDR, maxPixel)
