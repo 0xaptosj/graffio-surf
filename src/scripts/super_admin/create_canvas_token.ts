@@ -1,6 +1,6 @@
-import { CanvasTokenContract } from "../../canvas_token_contract_optimized";
+import { CanvasTokenContract } from "../../canvas_token_contract";
 import {
-  OPTIMIZED_CANVAS_CONTRACT_OWNER_PRIVATE_KEY,
+  CANVAS_CONTRACT_OWNER_PRIVATE_KEY,
   FULL_NODE_URL,
   NETWORK,
 } from "../../const";
@@ -8,15 +8,15 @@ import {
 const createCanvasToken = async () => {
   const canvasTokenContract = new CanvasTokenContract(
     NETWORK,
-    OPTIMIZED_CANVAS_CONTRACT_OWNER_PRIVATE_KEY
+    CANVAS_CONTRACT_OWNER_PRIVATE_KEY
   );
 
   const name = "canvas token";
   const description = "canvas token";
   const width = 1000;
   const height = 1000;
-  const perAccountTimeoutS = 5;
-  const defaultColorID = 5;
+  const perAccountTimeoutS = 0;
+  const defaultColorID = 1;
   const maxNumberOfPixelsPerDraw = 5000;
   const drawEnabledForNonAdmin = true;
 
@@ -39,10 +39,12 @@ const createCanvasToken = async () => {
       return res.json();
     })
     .then((res) => {
-      // @ts-ignore
-      const canvasTokenAddr = res.events[0].data.token;
-      console.log(`canvasTokenAddr: ${canvasTokenAddr}`);
-      return canvasTokenAddr;
+      console.log(JSON.stringify(res, null, 2));
+      //   // @ts-ignore
+      //   const canvasTokenAddr = res.events[0].data.token;
+      //   console.log(`canvasTokenAddr: ${canvasTokenAddr}`);
+      //   return canvasTokenAddr;
+      // });
     });
 };
 

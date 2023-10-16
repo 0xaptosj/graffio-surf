@@ -2,11 +2,8 @@ import { AptosAccount, AptosClient, BCS } from "aptos";
 import { serializeVectorU64, serializeVectorU8 } from "./util";
 import {
   CANVAS_CONTRACT_ADDR,
-  OPTIMIZED_CANVAS_CONTRACT_ADDR,
   GAS_LIMIT,
   GAS_PRICE,
-  USE_OPTIMIZED_VERSION,
-  OPTIMIZED_CANVAS_TOKEN_ADDR,
   CANVAS_TOKEN_ADDR,
 } from "./const";
 import {
@@ -19,18 +16,7 @@ import {
   ChainId,
 } from "./types";
 
-const getPayload = (canvasTokenAddr: `0x${string}`, rgbaxyArr: RGBAXY[]) => {
-  return [
-    BCS.bcsToBytes(AccountAddress.fromHex(canvasTokenAddr)),
-    serializeVectorU64(rgbaxyArr.map((rgbaxy) => rgbaxy.x)),
-    serializeVectorU64(rgbaxyArr.map((rgbaxy) => rgbaxy.y)),
-    serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.r)),
-    serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.g)),
-    serializeVectorU8(rgbaxyArr.map((rgbaxy) => rgbaxy.b)),
-  ];
-};
-
-const getOptimizedPayload = (canvasTokenAddr: `0x${string}`, xycArr: XYC[]) => {
+const getPayload = (canvasTokenAddr: `0x${string}`, xycArr: XYC[]) => {
   return [
     BCS.bcsToBytes(AccountAddress.fromHex(canvasTokenAddr)),
     serializeVectorU64(xycArr.map((rgbaxy) => rgbaxy.x)),
@@ -42,25 +28,18 @@ const getOptimizedPayload = (canvasTokenAddr: `0x${string}`, xycArr: XYC[]) => {
 export const drawPoint = async (
   aptosClient: AptosClient,
   account: AptosAccount,
-  arr: RGBAXY[] | XYC[]
+  arr: XYC[]
 ) => {
-  const canvasContractAddr = USE_OPTIMIZED_VERSION
-    ? OPTIMIZED_CANVAS_CONTRACT_ADDR
-    : CANVAS_CONTRACT_ADDR;
-  const canvasTokenAddr = USE_OPTIMIZED_VERSION
-    ? OPTIMIZED_CANVAS_TOKEN_ADDR
-    : CANVAS_TOKEN_ADDR;
+  const canvasContractAddr = CANVAS_CONTRACT_ADDR;
+  const canvasTokenAddr = CANVAS_TOKEN_ADDR;
 
   const entryFunctionPayload = new TransactionPayloadEntryFunction(
     EntryFunction.natural(
       `${canvasContractAddr}::canvas_token`,
       "draw",
       [],
-      USE_OPTIMIZED_VERSION
-        ? // @ts-ignore
-          getOptimizedPayload(canvasTokenAddr, arr)
-        : // @ts-ignore
-          getPayload(canvasTokenAddr, arr)
+
+      getPayload(canvasTokenAddr, arr)
     )
   );
 

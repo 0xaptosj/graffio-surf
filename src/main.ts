@@ -7,7 +7,6 @@ import {
   NUM_DRAWERS,
   OVERLAY_IMAGE_PATH,
   TOP_POS,
-  USE_OPTIMIZED_VERSION,
 } from "./const";
 import { AccountPool, createAndFundAccount } from "./account_pool";
 import {
@@ -18,10 +17,7 @@ import {
 } from "./util";
 import { AptosAccount } from "aptos";
 import { drawPoint } from "./draw_using_aptos_sdk_for_massive_draw";
-import {
-  loadImageDiffBetweenOverlayAndCurrent,
-  loadImageDiffBetweenOverlayAndCurrentOptimized,
-} from "./calculate_image_diff";
+import { loadImageDiffBetweenOverlayAndCurrent } from "./calculate_image_diff";
 
 async function main() {
   const args = process.argv.slice(2); // The first two arguments are node and the script file
@@ -37,17 +33,11 @@ async function main() {
   // Drawing it will place overlay image on top of current image
 
   let centerImage = false;
-  let toDraw = USE_OPTIMIZED_VERSION
-    ? await loadImageDiffBetweenOverlayAndCurrentOptimized({
-        centerImage,
-        leftPos,
-        topPos,
-      })
-    : await loadImageDiffBetweenOverlayAndCurrent({
-        centerImage,
-        leftPos,
-        topPos,
-      });
+  let toDraw = await loadImageDiffBetweenOverlayAndCurrent({
+    centerImage,
+    leftPos,
+    topPos,
+  });
 
   console.log(`toDraw pixels count: ${toDraw.length}`);
   if (toDraw.length === 0) {

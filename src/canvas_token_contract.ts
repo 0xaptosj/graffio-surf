@@ -32,15 +32,7 @@ export class CanvasTokenContract {
     width: number,
     height: number,
     perAccountTimeoutS: number,
-    canDrawForS: number,
-    cost: number,
-    costMultiplier: number,
-    costMultiplierDecayS: number,
-    defaultColorR: number,
-    defaultColorG: number,
-    defaultColorB: number,
-    canDrawMultiplePixelsAtOnce: boolean,
-    ownerIsSuperAdmin: boolean,
+    defaultColorID: number,
     maxNumberOfPixelsPerDraw: number,
     drawEnabledForNonAdmin: boolean
   ) {
@@ -53,15 +45,7 @@ export class CanvasTokenContract {
         width,
         height,
         perAccountTimeoutS,
-        canDrawForS,
-        cost,
-        costMultiplier,
-        costMultiplierDecayS,
-        defaultColorR,
-        defaultColorG,
-        defaultColorB,
-        canDrawMultiplePixelsAtOnce,
-        ownerIsSuperAdmin,
+        defaultColorID,
         maxNumberOfPixelsPerDraw,
         drawEnabledForNonAdmin,
       ],
@@ -107,36 +91,18 @@ export class CanvasTokenContract {
     });
   }
 
-  async addToAllowList(canvas: `0x${string}`, addr: `0x${string}`) {
+  async addToUnlimitedArtists(canvas: `0x${string}`, addr: `0x${string}`) {
     if (!this.account) throw new Error("ANS SDK: No account provided");
-    return this.client.useABI(ABI).entry.add_to_allowlist({
+    return this.client.useABI(ABI).entry.add_to_unlimited_artists({
       type_arguments: [],
       arguments: [canvas, addr],
       account: this.account,
     });
   }
 
-  async removeFromAllowList(canvas: `0x${string}`, addr: `0x${string}`) {
+  async removeFromUnlimitedArtists(canvas: `0x${string}`, addr: `0x${string}`) {
     if (!this.account) throw new Error("ANS SDK: No account provided");
-    return this.client.useABI(ABI).entry.remove_from_allowlist({
-      type_arguments: [],
-      arguments: [canvas, addr],
-      account: this.account,
-    });
-  }
-
-  async addToBlockList(canvas: `0x${string}`, addr: `0x${string}`) {
-    if (!this.account) throw new Error("ANS SDK: No account provided");
-    return this.client.useABI(ABI).entry.add_to_blocklist({
-      type_arguments: [],
-      arguments: [canvas, addr],
-      account: this.account,
-    });
-  }
-
-  async removeFromBlockList(canvas: `0x${string}`, addr: `0x${string}`) {
-    if (!this.account) throw new Error("ANS SDK: No account provided");
-    return this.client.useABI(ABI).entry.remove_from_blocklist({
+    return this.client.useABI(ABI).entry.remove_from_unlimited_artists({
       type_arguments: [],
       arguments: [canvas, addr],
       account: this.account,
@@ -145,7 +111,7 @@ export class CanvasTokenContract {
 
   async updateMaxNumberOfPixelsPerDraw(canvas: `0x${string}`, limit: number) {
     if (!this.account) throw new Error("ANS SDK: No account provided");
-    return this.client.useABI(ABI).entry.update_max_number_of_piexls_per_draw({
+    return this.client.useABI(ABI).entry.update_max_number_of_pixels_per_draw({
       type_arguments: [],
       arguments: [canvas, limit],
       account: this.account,
@@ -167,14 +133,12 @@ export class CanvasTokenContract {
     canvas: `0x${string}`,
     xs: number[],
     ys: number[],
-    rs: number[],
-    gs: number[],
-    bs: number[]
+    colorIDs: number[]
   ) {
     if (!this.account) throw new Error("ANS SDK: No account provided");
     return this.client.useABI(ABI).entry.draw({
       type_arguments: [],
-      arguments: [canvas, xs, ys, rs, gs, bs],
+      arguments: [canvas, xs, ys, colorIDs],
       account: this.account,
     });
   }

@@ -1,10 +1,10 @@
-import { CanvasTokenContract } from "../../canvas_token_contract_optimized";
+import { CanvasTokenContract } from "../../canvas_token_contract";
 import {
   ADMIN_1_PRIVATE_KEY,
-  OPTIMIZED_CANVAS_TOKEN_ADDR,
   NETWORK,
   USER_1_PRIVATE_KEY,
   DRAWER_PRIVATE_KEYS,
+  CANVAS_TOKEN_ADDR,
 } from "../../const";
 import { getAptosAccountFromPrivateKey } from "../../util";
 
@@ -30,7 +30,7 @@ const addToUnlimitedArtists = async () => {
 
   for (const drawerAddr of drawerAddresses) {
     await canvasTokenContract.addToUnlimitedArtists(
-      OPTIMIZED_CANVAS_TOKEN_ADDR,
+      CANVAS_TOKEN_ADDR,
       drawerAddr
     );
     await new Promise((resolve) => setTimeout(resolve, 2000));

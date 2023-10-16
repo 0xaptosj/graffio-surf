@@ -2,8 +2,6 @@ import "dotenv/config";
 
 import { env } from "process";
 
-export const USE_OPTIMIZED_VERSION = true;
-
 /*
 // black, r: 0, g: 0, b: 0
 0,
@@ -37,15 +35,7 @@ export const CANVAS_CONTRACT_OWNER_PRIVATE_KEY =
   env.CANVAS_CONTRACT_OWNER_PRIVATE_KEY!;
 
 export const CANVAS_CONTRACT_ADDR = env.CANVAS_CONTRACT_ADDR!;
-export const CANVAS_TOKEN_ADDR = env.CANVAS_TOKEN_ADDR! as `0x${string}`;
-
-export const OPTIMIZED_CANVAS_CONTRACT_OWNER_PRIVATE_KEY =
-  env.OPTIMIZED_CANVAS_CONTRACT_OWNER_PRIVATE_KEY!;
-
-export const OPTIMIZED_CANVAS_CONTRACT_ADDR =
-  env.OPTIMIZED_CANVAS_CONTRACT_ADDR!;
-export const OPTIMIZED_CANVAS_TOKEN_ADDR =
-  env.OPTIMIZED_CANVAS_TOKEN_ADDR! as `0x${string}`;
+export const CANVAS_TOKEN_ADDR = env.CANVAS_TOKEN_ADDR as `0x${string}`;
 
 export const USER_1_PRIVATE_KEY = env.USER_1_PRIVATE_KEY!;
 export const ADMIN_1_PRIVATE_KEY = env.ADMIN_1_PRIVATE_KEY!;
