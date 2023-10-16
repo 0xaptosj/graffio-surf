@@ -1,11 +1,9 @@
 import { PromisePool } from "@supercharge/promise-pool";
 import {
-  CURRENT_IMAGE_PATH,
   LEFT_POS,
   LIMIT_PER_DRAW,
   MY_OWN_FAUCET_PRIVATE_KEY,
   NUM_DRAWERS,
-  OVERLAY_IMAGE_PATH,
   TOP_POS,
 } from "./const";
 import { AccountPool, createAndFundAccount } from "./account_pool";
@@ -102,6 +100,7 @@ async function main() {
         );
         // @ts-ignore
         arr = arr.filter((rgbaxy) => rgbaxy != undefined);
+        console.log(`address ${account.address().hex()}`);
         await drawPoint(aptosClient, account, arr);
       });
       drawn += LIMIT_PER_DRAW;

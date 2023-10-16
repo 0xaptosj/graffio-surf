@@ -21,14 +21,54 @@ import { env } from "process";
 7
 */
 export const RGB_TO_COLOR_ID = {
-  "0-0-0": 0,
-  "255-255-255": 1,
-  "0-158-25": 2,
-  "0-197-3": 3,
-  "255-198-0": 4,
-  "255-125-0": 5,
-  "250-0-106": 6,
-  "196-0-199": 7,
+  // "0-0-0": 0,
+  // "255-255-255": 1,
+  // "0-158-25": 2,
+  // "0-197-3": 3,
+  // "255-198-0": 4,
+  // "255-125-0": 5,
+  // "250-0-106": 6,
+  // "196-0-199": 7,
+  0: {
+    r: 0,
+    g: 0,
+    b: 0,
+  },
+  1: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
+  2: {
+    r: 0,
+    g: 158,
+    b: 25,
+  },
+  3: {
+    r: 0,
+    g: 197,
+    b: 3,
+  },
+  4: {
+    r: 255,
+    g: 198,
+    b: 0,
+  },
+  5: {
+    r: 255,
+    g: 125,
+    b: 0,
+  },
+  6: {
+    r: 250,
+    g: 0,
+    b: 106,
+  },
+  7: {
+    r: 196,
+    g: 0,
+    b: 199,
+  },
 };
 
 export const CANVAS_CONTRACT_OWNER_PRIVATE_KEY =
@@ -43,7 +83,7 @@ export const ADMIN_1_PRIVATE_KEY = env.ADMIN_1_PRIVATE_KEY!;
 export const FULL_NODE_URL = env.FULL_NODE_URL!;
 export const NETWORK = env.NETWORK! as "testnet" | "mainnet";
 
-export const CURRENT_IMAGE_PATH = "img/snapshot_bad.png";
+export const CURRENT_IMAGE_PATH = "img/snapshot_4.png";
 // Reset to snapshot image
 // export const OVERLAY_IMAGE_PATH = "img/snapshot_3.png";
 // Place a pepe
@@ -71,7 +111,7 @@ export const LIMIT_PER_DRAW = 1000;
 export const ONE_APT = 100_000_000;
 
 export const API_TOKEN = env.API_TOKEN!;
-export const API_GATEWAY_URL = "https://api.testnet.aptoslabs.com";
+export const API_GATEWAY_URL = "https://api.mainnet.aptoslabs.com";
 
 export const DRAWER_PRIVATE_KEYS = env.DRAWER_PRIVATE_KEYS!.split(",");
 export const NUM_DRAWERS = DRAWER_PRIVATE_KEYS.length;

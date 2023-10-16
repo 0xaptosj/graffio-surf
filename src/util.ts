@@ -28,10 +28,10 @@ export const getSequenceNumber = async (account: AptosAccount) => {
   return sequenceNumber;
 };
 
-export const serializeVectorU64 = (arr: Array<number>) => {
+export const serializeVectorU16 = (arr: Array<number>) => {
   const serializer = new BCS.Serializer();
   serializer.serializeU32AsUleb128(arr.length);
-  arr.forEach((arg) => serializer.serializeU64(arg));
+  arr.forEach((arg) => serializer.serializeU16(arg));
   return serializer.getBytes();
 };
 

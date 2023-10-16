@@ -1,10 +1,15 @@
 import { CanvasTokenContract } from "../../canvas_token_contract";
-import { CANVAS_TOKEN_ADDR, NETWORK, USER_1_PRIVATE_KEY } from "../../const";
+import {
+  CANVAS_CONTRACT_OWNER_PRIVATE_KEY,
+  CANVAS_TOKEN_ADDR,
+  NETWORK,
+  USER_1_PRIVATE_KEY,
+} from "../../const";
 
 const draw = async () => {
   const canvasTokenContract = new CanvasTokenContract(
     NETWORK,
-    USER_1_PRIVATE_KEY
+    CANVAS_CONTRACT_OWNER_PRIVATE_KEY
   );
 
   const xs = [10, 11, 12, 13];

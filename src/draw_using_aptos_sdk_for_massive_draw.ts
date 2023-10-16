@@ -1,5 +1,5 @@
 import { AptosAccount, AptosClient, BCS } from "aptos";
-import { serializeVectorU64, serializeVectorU8 } from "./util";
+import { serializeVectorU16, serializeVectorU8 } from "./util";
 import {
   CANVAS_CONTRACT_ADDR,
   GAS_LIMIT,
@@ -7,7 +7,6 @@ import {
   CANVAS_TOKEN_ADDR,
 } from "./const";
 import {
-  RGBAXY,
   AccountAddress,
   XYC,
   TransactionPayloadEntryFunction,
@@ -16,12 +15,25 @@ import {
   ChainId,
 } from "./types";
 
-const getPayload = (canvasTokenAddr: `0x${string}`, xycArr: XYC[]) => {
+const getPayload = (canvasTokenAddr: string, xycArr: XYC[]) => {
   return [
+    // BCS.bcsToBytes(AccountAddress.fromHex(canvasTokenAddr)),
+    // serializeVectorU16(xycArr.map((rgbaxy) => rgbaxy.x)),
+    // serializeVectorU16(xycArr.map((rgbaxy) => rgbaxy.y)),
+    // serializeVectorU8(xycArr.map((rgbaxy) => rgbaxy.c)),
     BCS.bcsToBytes(AccountAddress.fromHex(canvasTokenAddr)),
-    serializeVectorU64(xycArr.map((rgbaxy) => rgbaxy.x)),
-    serializeVectorU64(xycArr.map((rgbaxy) => rgbaxy.y)),
-    serializeVectorU8(xycArr.map((rgbaxy) => rgbaxy.c)),
+    BCS.serializeVectorWithFunc(
+      xycArr.map((rgbaxy) => rgbaxy.x),
+      "serializeU16"
+    ),
+    BCS.serializeVectorWithFunc(
+      xycArr.map((rgbaxy) => rgbaxy.y),
+      "serializeU16"
+    ),
+    BCS.serializeVectorWithFunc(
+      xycArr.map((rgbaxy) => rgbaxy.c),
+      "serializeU8"
+    ),
   ];
 };
 
@@ -30,16 +42,12 @@ export const drawPoint = async (
   account: AptosAccount,
   arr: XYC[]
 ) => {
-  const canvasContractAddr = CANVAS_CONTRACT_ADDR;
-  const canvasTokenAddr = CANVAS_TOKEN_ADDR;
-
   const entryFunctionPayload = new TransactionPayloadEntryFunction(
     EntryFunction.natural(
-      `${canvasContractAddr}::canvas_token`,
+      `${CANVAS_CONTRACT_ADDR}::canvas_token`,
       "draw",
       [],
-
-      getPayload(canvasTokenAddr, arr)
+      getPayload(CANVAS_TOKEN_ADDR, arr)
     )
   );
 
@@ -71,7 +79,7 @@ export const drawPoint = async (
   });
   console.log(
     "put dot:",
-    `${canvasTokenAddr.slice(0, 5)}...`,
+    `${CANVAS_TOKEN_ADDR.slice(0, 5)}...`,
     // rgbaxyArr,
     // [rgbaxy.x, rgbaxy.y],
     // [rgbaxy.r, rgbaxy.g, rgbaxy.b, rgbaxy.a],

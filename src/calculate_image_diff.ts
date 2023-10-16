@@ -1,5 +1,5 @@
 import Jimp from "jimp";
-import { RGBAXY, XYC } from "./types";
+import { RGBA, RGBAXY, XYC } from "./types";
 import {
   CURRENT_IMAGE_PATH,
   OVERLAY_IMAGE_PATH,
@@ -58,14 +58,8 @@ export const loadImageDiffBetweenOverlayAndCurrent = async (
             `${overlayImageRgba.r}-${overlayImageRgba.g}-${overlayImageRgba.b}`
           ];
         if (colorID == undefined) {
-          //   console.log(
-          //     `colorID is undefined for ${JSON.stringify(
-          //       overlayImageRgba,
-          //       null,
-          //       2
-          //     )}, default to 1 (white)`
-          //   );
-          colorID = 1;
+          // find closest color
+          colorID = findClosestColor(overlayImageRgba);
         }
         toDraw.push({ c: colorID, x: x + leftPos, y: y + topPos });
       }
@@ -83,4 +77,25 @@ export const loadImageDiffBetweenOverlayAndCurrent = async (
   const previewPath = "./preview/canvas_preview.png";
   await diffImage.writeAsync(previewPath);
   return toDraw;
+};
+
+const findClosestColor = (rgba: RGBA) => {
+  const { r, g, b } = rgba;
+  const colorIDs = Object.keys(RGB_TO_COLOR_ID);
+  let minDistance = Number.MAX_SAFE_INTEGER;
+  let closestColorID = 0;
+  for (let i = 0; i < colorIDs.length; i++) {
+    const colorID = parseInt(colorIDs[i]);
+    const color = RGB_TO_COLOR_ID[colorID];
+    const distance = Math.sqrt(
+      Math.pow(r - color.r, 2) +
+        Math.pow(g - color.g, 2) +
+        Math.pow(b - color.b, 2)
+    );
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestColorID = colorID;
+    }
+  }
+  return closestColorID;
 };
